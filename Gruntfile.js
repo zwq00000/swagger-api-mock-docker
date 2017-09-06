@@ -4,14 +4,14 @@ var path = require('path');
 var mockApi = require('swagger-mock-api');
 
 function corsMiddleware(req, res, next) {
-    var hasOrigin = req.headers.origin != null
-    res.setHeader('Access-Control-Allow-Origin', hasOrigin ? req.headers.origin : '*');
+    var hasOrigin = req.headers.origin !== null;
+    res.setHeader('Access-Control-Allow-Origin',  '*');
     res.setHeader('Access-Control-Allow-Credentials', !hasOrigin);
 
     res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS, PATCH');
-
+    
     var requestHeaders = req.headers['access-control-request-headers'];
-    if (requestHeaders != null) {
+    if (requestHeaders) {
         res.setHeader('Access-Control-Allow-Headers', requestHeaders);
     }
 
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                         middlewares.push(corsMiddleware);
 
                         middlewares.push(mockApi({
-                            swaggerFile: '/data/swagger.yaml',
+                            swaggerFile: '../swagger.yaml',
                             watch: true
                         }));
 
